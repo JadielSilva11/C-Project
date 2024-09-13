@@ -4,6 +4,13 @@
 #include <time.h>
 
 
+typedef struct
+{
+    char word[50];
+    char dica[50];
+}PalavraDica;
+
+
 
 
 int menu(void)
@@ -122,26 +129,20 @@ int contarLetras(char word[])
 
 
 
-void receberSecreta(char spalavra[])
+void receberSecretaeDica(PalavraDica spalavra[])
 {
     printf(" ______________________________________\n");
     printf("| Digite a palavra secreta:            |\n");
     printf("|______________________________________|\n");
     printf(" >> ");
-    scanf("%s" , spalavra);
-}
-
-
-
-
-void dica(char tip[])
-{
+    scanf("%s" , spalavra->word);
     printf(" ______________________________________\n");
     printf("| Dica:                                |\n");
     printf("|______________________________________|\n");
     printf(" >> ");
-    scanf("%s", tip);
+    scanf("%s", spalavra->dica);
 }
+
 
 
 void boneco(int t)
@@ -217,10 +218,7 @@ void boneco(int t)
 void preencher(char word[] , int q)
 {
     int i;
-
-
-
-
+    
     for(i=0;i<q;i++)
     {
         word[i] = '*';
@@ -375,12 +373,14 @@ int main()
     srand(time(NULL));
 
 
-
+    PalavraDica sPalavra[30];
+    
+    char s_palavra[20];
+    char tip[20];
 
     int qtd_letras , qtd_digitadas=0;
-    char s_palavra[30] , digitadas[30];
-    char t_palavras[20][10];  //Adicionei um vetor de vetores para armazenar todas as palavras secretas
-    char tip[10];             //dica da palavra secreta
+    char digitadas[30];
+    char t_palavras[20][10];  //Adicionei um vetor de vetores para armazenar todas as palavras secretas            
     char tip_by_pc[10];       //dica do PC caso o jogador escolha o modo singleplay
     int v_jogadas=0;          //Contador de quantas vezes o usuario jogou
     int op=0;
@@ -453,8 +453,8 @@ int main()
 
         else if(opcao_menu==2)
         {
-            receberSecreta(s_palavra);
-            dica(tip);
+            receberSecretaeDica(sPalavra);
+            
 
 
 
@@ -467,7 +467,7 @@ int main()
 
 
 
-            qtd_letras = contarLetras(s_palavra);
+            qtd_letras = contarLetras(sPalavra->word);
 
 
 
@@ -488,7 +488,7 @@ int main()
 
 
 
-            adivinhar(s_palavra, n_palavra, qtd_letras, &d, &v , digitadas , &qtd_digitadas, tip);
+            adivinhar(sPalavra->word, n_palavra, qtd_letras, &d, &v , digitadas , &qtd_digitadas, sPalavra->dica);
 
 
 
@@ -506,7 +506,7 @@ int main()
             }
 
 
-            strcpy(t_palavras[v_jogadas], s_palavra); //Insere a palavra secreta dentro do vetor de vetores
+            strcpy(t_palavras[v_jogadas], sPalavra->word); //Insere a palavra secreta dentro do vetor de vetores
             v_jogadas++; //Aumenta a variavel para armazenar a proxima palavra secreta no proximo vetor
         }
 
