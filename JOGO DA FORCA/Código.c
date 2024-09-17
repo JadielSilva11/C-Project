@@ -218,7 +218,7 @@ void boneco(int t)
 void preencher(char word[] , int q)
 {
     int i;
-    
+
     for(i=0;i<q;i++)
     {
         word[i] = '*';
@@ -370,17 +370,20 @@ void adivinhar(char s[] , char n[], int q , int *d , int *v , char digitadas[] ,
 
 int main()
 {
+    FILE *palavras;
+
+    palavras = fopen("jogadas.txt" , "w");
+
     srand(time(NULL));
 
 
     PalavraDica sPalavra[30];
-    
+
     char s_palavra[20];
-    char tip[20];
 
     int qtd_letras , qtd_digitadas=0;
     char digitadas[30];
-    char t_palavras[20][10];  //Adicionei um vetor de vetores para armazenar todas as palavras secretas            
+    char t_palavras[20][10];  //Adicionei um vetor de vetores para armazenar todas as palavras secretas
     char tip_by_pc[10];       //dica do PC caso o jogador escolha o modo singleplay
     int v_jogadas=0;          //Contador de quantas vezes o usuario jogou
     int op=0;
@@ -454,7 +457,7 @@ int main()
         else if(opcao_menu==2)
         {
             receberSecretaeDica(sPalavra);
-            
+
 
 
 
@@ -529,6 +532,8 @@ int main()
     {
         printf("\t\t\t|  Partida %d: ", i+1);
         printf("%s\n", t_palavras[i]);
+        //impressao da palavra no arquivo
+        fprintf(palavras , "%s\n" , t_palavras[i]);
     }
 
     printf("\t\t\t|_____________________________________________________|\n");
